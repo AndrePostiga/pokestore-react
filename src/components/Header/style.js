@@ -9,7 +9,7 @@ export const Navigation = styled.nav`
   background: orange;
   display: flex;
   justify-content: baseline;
-  width: 100%;
+  width: 100% !important;
   padding: 20px 30px;
 
   input {

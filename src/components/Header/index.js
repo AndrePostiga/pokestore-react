@@ -8,7 +8,7 @@ export default function Header() {
       <button type="button">
         <MdSearch size={36} color="#FFF" />
       </button>
-      <input type="text" />
+      <input type="text" placeholder="Pesquisar..." />
     </Navigation>
   );
 }
