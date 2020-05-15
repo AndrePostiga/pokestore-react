@@ -1,179 +1,82 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { MdAddShoppingCart, MdRemoveShoppingCart } from 'react-icons/md';
 
+import { Container, ProductList } from './styles';
+import Cart from '../../components/Cart';
+import { formatPrice } from '../../util/format';
 import {
-  Container,
-  ProductList,
-  ProductCartView,
-  Cart,
-  Footer,
-} from './styles';
+  getPokemonsOfType,
+  searchPokemon,
+} from '../../services/PokemonService';
 
-export default function Checkout() {
-  return (
-    <Container>
-      <ProductList>
-        <li>
-          <img
-            src="https://pm1.narvii.com/6223/11335ffde96efad386b23068bb8751d77e26c1ef_hq.jpg"
-            alt="Bulbassaur"
-          />
+class Checkout extends Component {
+  // eslint-disable-next-line react/state-in-constructor
+  state = {
+    pokemons: [],
+  };
 
-          <strong>Bulbassaur</strong>
-          <span>Price</span>
+  async componentDidMount() {
+    const { pokemons } = this.state;
+    const items = await this.getPokemons('grass');
+    this.setState({
+      pokemons: [...pokemons, ...items],
+    });
+  }
 
-          <button type="button">
-            <MdAddShoppingCart size={12} color="#FFF" />
-            <span>Adicionar ao carrinho</span>
-          </button>
-        </li>
-        <li>
-          <img
-            src="https://pm1.narvii.com/6223/11335ffde96efad386b23068bb8751d77e26c1ef_hq.jpg"
-            alt="Bulbassaur"
-          />
+  async componentDidUpdate(prevProps) {
+    const { searchText } = this.props;
 
-          <strong>Bulbassaur</strong>
-          <span>Price</span>
+    if (prevProps.searchText !== searchText) {
+      const searched = await searchPokemon(searchText, 'grass');
+      this.setState({ pokemons: [...searched] });
+    }
+  }
 
-          <button type="button">
-            <MdAddShoppingCart size={12} color="#FFF" />
-            <span>Adicionar ao carrinho</span>
-          </button>
-        </li>
-        <li>
-          <img
-            src="https://pm1.narvii.com/6223/11335ffde96efad386b23068bb8751d77e26c1ef_hq.jpg"
-            alt="Bulbassaur"
-          />
+  getPokemons = async (type) => {
+    const data = await getPokemonsOfType(type);
+    const items = data.map((item) => ({
+      ...item,
+      priceFormatted: formatPrice(item.price),
+    }));
 
-          <strong>Bulbassaur</strong>
-          <span>Price</span>
+    return items;
+  };
 
-          <button type="button">
-            <MdAddShoppingCart size={12} color="#FFF" />
-            <span>Adicionar ao carrinho</span>
-          </button>
-        </li>
-        <li>
-          <img
-            src="https://pm1.narvii.com/6223/11335ffde96efad386b23068bb8751d77e26c1ef_hq.jpg"
-            alt="Bulbassaur"
-          />
+  handleAdd = (product) => {
+    const { dispatch } = this.props;
 
-          <strong>Bulbassaur</strong>
-          <span>Price</span>
+    dispatch({
+      type: 'ADD_TO_CART',
+      product,
+    });
+  };
 
-          <button type="button">
-            <MdAddShoppingCart size={12} color="#FFF" />
-            <span>Adicionar ao carrinho</span>
-          </button>
-        </li>
-        <li>
-          <img
-            src="https://pm1.narvii.com/6223/11335ffde96efad386b23068bb8751d77e26c1ef_hq.jpg"
-            alt="Bulbassaur"
-          />
+  render() {
+    const { pokemons } = this.state;
+    return (
+      <Container>
+        <ProductList>
+          {pokemons.map((pokemon) => (
+            <li key={pokemon.id}>
+              <img src={pokemon.imageUrl} alt={pokemon.name} />
+              <strong>{pokemon.name}</strong>
+              <span>{pokemon.priceFormatted}</span>
 
-          <strong>Bulbassaur</strong>
-          <span>Price</span>
-
-          <button type="button">
-            <MdAddShoppingCart size={12} color="#FFF" />
-            <span>Adicionar ao carrinho</span>
-          </button>
-        </li>
-        <li>
-          <img
-            src="https://pm1.narvii.com/6223/11335ffde96efad386b23068bb8751d77e26c1ef_hq.jpg"
-            alt="Bulbassaur"
-          />
-
-          <strong>Bulbassaur</strong>
-          <span>R$ 128,99</span>
-
-          <button type="button">
-            <MdAddShoppingCart size={12} color="#FFF" />
-            <span>Adicionar ao carrinho</span>
-          </button>
-        </li>
-      </ProductList>
-
-      <Cart>
-        <h1>Carrinho</h1>
-        <ProductCartView>
-          <li>
-            <img
-              src="https://pm1.narvii.com/6223/11335ffde96efad386b23068bb8751d77e26c1ef_hq.jpg"
-              alt="Bulbassaur"
-            />
-            <strong>Bulbassaur</strong>
-            <span>R$ 128,99</span>
-
-            <button type="button">
-              <MdRemoveShoppingCart size={12} color="#FFF" />
-            </button>
-          </li>
-          <li>
-            <img
-              src="https://pm1.narvii.com/6223/11335ffde96efad386b23068bb8751d77e26c1ef_hq.jpg"
-              alt="Bulbassaur"
-            />
-            <strong>Bulbassaur</strong>
-            <span>R$ 128,99</span>
-
-            <button type="button">
-              <MdRemoveShoppingCart size={12} color="#FFF" />
-            </button>
-          </li>
-          <li>
-            <img
-              src="https://pm1.narvii.com/6223/11335ffde96efad386b23068bb8751d77e26c1ef_hq.jpg"
-              alt="Bulbassaur"
-            />
-            <strong>Bulbassaur</strong>
-            <span>R$ 128,99</span>
-
-            <button type="button">
-              <MdRemoveShoppingCart size={12} color="#FFF" />
-            </button>
-          </li>
-          <li>
-            <img
-              src="https://pm1.narvii.com/6223/11335ffde96efad386b23068bb8751d77e26c1ef_hq.jpg"
-              alt="Bulbassaur"
-            />
-            <strong>Bulbassaur</strong>
-            <span>R$ 128,99</span>
-
-            <button type="button">
-              <MdRemoveShoppingCart size={12} color="#FFF" />
-            </button>
-          </li>
-          <li>
-            <img
-              src="https://pm1.narvii.com/6223/11335ffde96efad386b23068bb8751d77e26c1ef_hq.jpg"
-              alt="Bulbassaur"
-            />
-            <strong>Bulbassaur</strong>
-            <span>R$ 128,99</span>
-
-            <button type="button">
-              <MdRemoveShoppingCart size={12} color="#FFF" />
-            </button>
-          </li>
-        </ProductCartView>
-        <Footer>
-          <div>
-            <strong>Total</strong>
-            <span>R$ 1920,90</span>
-          </div>
-          <br />
-          <button type="button">
-            <span>Finalizar compra</span>
-          </button>
-        </Footer>
-      </Cart>
-    </Container>
-  );
+              <button type="button" onClick={() => this.handleAdd(pokemon)}>
+                <MdAddShoppingCart size={12} color="#FFF" />
+                <span>Adicionar ao carrinho</span>
+              </button>
+            </li>
+          ))}
+        </ProductList>
+      </Container>
+    );
+  }
 }
+
+const mapStateToProps = (state) => ({
+  searchText: state.productList,
+});
+
+export default connect(mapStateToProps)(Checkout);
