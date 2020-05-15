@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { MdAddShoppingCart, MdRemoveShoppingCart } from 'react-icons/md';
+import { MdAddShoppingCart } from 'react-icons/md';
 
 import { Container, ProductList } from './styles';
 import Cart from '../../components/Cart';
@@ -11,7 +11,6 @@ import {
 } from '../../services/PokemonService';
 
 class Checkout extends Component {
-  // eslint-disable-next-line react/state-in-constructor
   state = {
     pokemons: [],
   };
@@ -45,7 +44,6 @@ class Checkout extends Component {
 
   handleAdd = (product) => {
     const { dispatch } = this.props;
-
     dispatch({
       type: 'ADD_TO_CART',
       product,
@@ -70,6 +68,7 @@ class Checkout extends Component {
             </li>
           ))}
         </ProductList>
+        <Cart />
       </Container>
     );
   }

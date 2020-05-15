@@ -46,10 +46,14 @@ export async function getPokemon(name) {
 }
 
 export async function searchPokemon(name, type) {
+  if (!name) {
+    return await getPokemonsOfType(type)
+  }
+
   const { data } = await api.getType('/type', type);
 
   const search = data.pokemon.find((element) => {
-    return element.pokemon.name === name;
+    return element.pokemon.name === name.toLowerCase();
   });
 
   const pokemon = await getPokemonsFromApi([search.pokemon.url]);
