@@ -10,8 +10,17 @@ class Header extends Component {
   };
 
   handleChange = (input) => {
+    const { dispatch } = this.props;
+
+    const term = input.target.value;
+
     this.setState({
-      inputValue: input.target.value,
+      inputValue: term,
+    });
+
+    dispatch({
+      type: 'SEARCH',
+      inputValue: term.toLowerCase(),
     });
   };
 

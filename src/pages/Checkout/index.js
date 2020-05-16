@@ -1,34 +1,56 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { MdAddShoppingCart } from 'react-icons/md';
-
-import { Container, ProductList } from './styles';
-import Cart from '../../components/Cart';
+import { Container } from './styles';
 import { formatPrice } from '../../util/format';
-import {
-  getPokemonsOfType,
-  searchPokemon,
-} from '../../services/PokemonService';
+import { getPokemonsOfType } from '../../services/PokemonService';
+import Cart from '../../components/Cart';
+import ProductList from '../../components/ProductList';
 
 class Checkout extends Component {
   state = {
     pokemons: [],
+    searchedPokemon: null,
   };
 
   async componentDidMount() {
+    const { dispatch } = this.props;
     const { pokemons } = this.state;
-    const items = await this.getPokemons('grass');
+
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    if (cart) {
+      cart.map((product) => {
+        dispatch({
+          type: 'ADD_TO_CART',
+          product,
+        });
+      });
+    }
+
+    let items = JSON.parse(localStorage.getItem('pokemons'));
+    if (!items) {
+      items = await this.getPokemons('grass');
+    }
+
     this.setState({
       pokemons: [...pokemons, ...items],
     });
   }
 
-  async componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const { searchText } = this.props;
+    const { pokemons } = this.state;
+
+    if (prevState.pokemons !== pokemons) {
+      localStorage.setItem('pokemons', JSON.stringify(pokemons));
+    }
 
     if (prevProps.searchText !== searchText) {
-      const searched = await searchPokemon(searchText, 'grass');
-      this.setState({ pokemons: [...searched] });
+      const searched = pokemons.filter((pokemon) =>
+        pokemon.name.toLowerCase().startsWith(searchText)
+      );
+      this.setState({
+        searchedPokemon: searched[0] ? [...searched] : null,
+      });
     }
   }
 
@@ -42,32 +64,11 @@ class Checkout extends Component {
     return items;
   };
 
-  handleAdd = (product) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'ADD_TO_CART',
-      product,
-    });
-  };
-
   render() {
-    const { pokemons } = this.state;
+    const { pokemons, searchedPokemon } = this.state;
     return (
       <Container>
-        <ProductList>
-          {pokemons.map((pokemon) => (
-            <li key={pokemon.id}>
-              <img src={pokemon.imageUrl} alt={pokemon.name} />
-              <strong>{pokemon.name}</strong>
-              <span>{pokemon.priceFormatted}</span>
-
-              <button type="button" onClick={() => this.handleAdd(pokemon)}>
-                <MdAddShoppingCart size={12} color="#FFF" />
-                <span>Adicionar ao carrinho</span>
-              </button>
-            </li>
-          ))}
-        </ProductList>
+        <ProductList pokemons={searchedPokemon || pokemons} />
         <Cart />
       </Container>
     );

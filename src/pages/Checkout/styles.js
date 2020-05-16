@@ -11,6 +11,10 @@ export const Container = styled.div`
   }
 `;
 
+export const NotFoundMessage = styled.h1`
+  color: #fff;
+`;
+
 export const Cart = styled.div`
   width: 30%;
   @media (max-width: 900px) {

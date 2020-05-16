@@ -16,13 +16,11 @@ export default function cart(state = [], action) {
         const productIndex = state.findIndex((e) => e.id === action.id);
 
         if (draft[productIndex].amount === 1) {
-          draft.splice(productIndex, 1)
+          draft.splice(productIndex, 1);
         } else {
-          draft[productIndex].amount -= 1
+          draft[productIndex].amount -= 1;
         }
-
-
-      })
+      });
 
     default:
       return state;
