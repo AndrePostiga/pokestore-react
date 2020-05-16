@@ -80,7 +80,7 @@ export const CartFooter = styled.div`
   }
 
   button {
-    background: red;
+    background: ${props => props.theme};
     color: #fff;
     border: 0;
     border-radius: 4px;
@@ -90,7 +90,7 @@ export const CartFooter = styled.div`
     transition: background 0.2s;
 
     &:hover {
-      background: ${darken(0.03, 'red')};
+      background: ${props => darken(0.03,props.theme)};
     }
 
     span {

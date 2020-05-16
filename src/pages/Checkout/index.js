@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container } from './styles';
-import { formatPrice } from '../../util/format';
+import { Container} from './styles';
 import { getPokemonsOfType } from '../../services/PokemonService';
 import Cart from '../../components/Cart';
 import ProductList from '../../components/ProductList';
@@ -13,22 +12,12 @@ class Checkout extends Component {
   };
 
   async componentDidMount() {
-    const { dispatch } = this.props;
     const { pokemons } = this.state;
-
-    const cart = JSON.parse(localStorage.getItem('cart'));
-    if (cart) {
-      cart.map((product) => {
-        dispatch({
-          type: 'ADD_TO_CART',
-          product,
-        });
-      });
-    }
+    const { theme } = this.props
 
     let items = JSON.parse(localStorage.getItem('pokemons'));
     if (!items) {
-      items = await this.getPokemons('grass');
+      items = await this.getPokemons(theme.theme);
     }
 
     this.setState({
@@ -48,6 +37,7 @@ class Checkout extends Component {
       const searched = pokemons.filter((pokemon) =>
         pokemon.name.toLowerCase().startsWith(searchText)
       );
+
       this.setState({
         searchedPokemon: searched[0] ? [...searched] : null,
       });
@@ -56,16 +46,12 @@ class Checkout extends Component {
 
   getPokemons = async (type) => {
     const data = await getPokemonsOfType(type);
-    const items = data.map((item) => ({
-      ...item,
-      priceFormatted: formatPrice(item.price),
-    }));
-
-    return items;
+    return data;
   };
 
   render() {
     const { pokemons, searchedPokemon } = this.state;
+    
     return (
       <Container>
         <ProductList pokemons={searchedPokemon || pokemons} />
@@ -77,6 +63,7 @@ class Checkout extends Component {
 
 const mapStateToProps = (state) => ({
   searchText: state.productList,
+  theme: state.theme
 });
 
 export default connect(mapStateToProps)(Checkout);

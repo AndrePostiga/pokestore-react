@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { MdAddShoppingCart } from 'react-icons/md';
 import { Container, List } from './style';
 
-function ProductList({ pokemons, dispatch }) {
+function ProductList({ pokemons, dispatch, theme }) {
+
   return (
     <Container>
-      <List>
+      <List theme={theme.color}>
         {pokemons.map((pokemon) => (
           <li key={pokemon.id}>
             <img src={pokemon.imageUrl} alt={pokemon.name} />
@@ -29,4 +30,8 @@ function ProductList({ pokemons, dispatch }) {
   );
 }
 
-export default connect()(ProductList);
+const mapStateToProps = (state) => ({
+  theme: state.theme,
+});
+
+export default connect(mapStateToProps)(ProductList);

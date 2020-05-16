@@ -41,7 +41,7 @@ export const List = styled.ul`
     }
 
     button {
-      background: orange;
+      background: ${props => props.theme};
       border: 0;
       border-radius: 4px;
       overflow: hidden;
@@ -53,13 +53,14 @@ export const List = styled.ul`
       transition: background 0.2s;
 
       &:hover {
-        background: ${darken(0.03, 'red')};
+        background: ${props => darken(0.03,props.theme)};
       }
 
       span {
         flex: 1;
         text-align: center;
         font-weight: bold;
+        color: #fff;
       }
     }
   }

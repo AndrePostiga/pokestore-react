@@ -36,8 +36,9 @@ class Header extends Component {
 
   render() {
     const { inputValue } = this.state;
+    const { theme } = this.props
     return (
-      <Navigation>
+      <Navigation theme={theme.color}>
         <button type="button">
           <MdSearch
             size={36}
@@ -57,4 +58,8 @@ class Header extends Component {
   }
 }
 
-export default connect()(Header);
+const mapStateToProps = (state) => ({
+  theme: state.theme
+});
+
+export default connect(mapStateToProps)(Header);

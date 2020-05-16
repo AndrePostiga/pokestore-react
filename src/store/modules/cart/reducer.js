@@ -1,5 +1,10 @@
 import produce from 'immer';
 
+const retrieveState = () => {
+  const cart = JSON.parse(localStorage.getItem('cart'));
+  return cart || []
+}
+
 export default function cart(state = [], action) {
   switch (action.type) {
     case 'ADD_TO_CART':
@@ -23,6 +28,8 @@ export default function cart(state = [], action) {
       });
 
     default:
-      return state;
+      return retrieveState();
   }
 }
+
+

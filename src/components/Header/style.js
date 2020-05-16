@@ -6,7 +6,7 @@ export const Container = styled.div`
 `;
 
 export const Navigation = styled.nav`
-  background: orange;
+  background: ${props => props.theme};
   display: flex;
   justify-content: baseline;
   width: 100% !important;
@@ -23,15 +23,9 @@ export const Navigation = styled.nav`
   }
 
   button {
-    background: orange;
+    background: ${props => props.theme};
     border: 0;
     border-radius: 4px;
     overflow: hidden;
-
-    transition: background 0.2s;
-
-    &:hover {
-      background: ${darken(0.03, 'orange')};
-    }
   }
 `;

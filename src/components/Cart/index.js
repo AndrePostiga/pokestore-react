@@ -11,9 +11,17 @@ class Cart extends Component {
     total: [],
   };
 
+  componentDidMount() {
+    const {cart, total} = this.props
+    this.setState({
+      cart,
+      total
+    })
+  }
+
   componentDidUpdate(prevProps, prevState) {
     const { cart, total } = this.props;
-
+    
     if (prevProps.cart !== cart) {
       localStorage.setItem('cart', JSON.stringify(cart));
       localStorage.setItem('total', JSON.stringify(total));
@@ -25,8 +33,9 @@ class Cart extends Component {
   }
 
   render() {
-    const { dispatch } = this.props;
+    const { dispatch, theme } = this.props;
     const { cart, total } = this.state;
+
     return (
       <Container>
         <h1>Carrinho</h1>
@@ -37,8 +46,7 @@ class Cart extends Component {
               <strong>{item.name}</strong>
               <span>{item.subTotal}</span>
               <span>{item.amount}</span>
-              <button
-                type="button"
+              <button type="button"
                 onClick={() =>
                   dispatch({ type: 'REMOVE_FROM_CART', id: item.id })
                 }
@@ -49,7 +57,7 @@ class Cart extends Component {
           ))}
         </ProductCartView>
 
-        <CartFooter>
+        <CartFooter theme={theme.color}>
           <div>
             <strong>Total</strong>
             <span>{total}</span>
@@ -72,6 +80,7 @@ const mapStateToProps = (state) => ({
   total: formatPrice(
     state.cart.reduce((total, item) => (total += item.amount * item.price), 0)
   ),
+  theme: state.theme
 });
 
 export default connect(mapStateToProps)(Cart);
