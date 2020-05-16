@@ -16,8 +16,9 @@ class Checkout extends Component {
     const { theme } = this.props
 
     let items = JSON.parse(localStorage.getItem('pokemons'));
+    
     if (!items) {
-      items = await this.getPokemons(theme.theme);
+      items = await getPokemonsOfType(theme.theme);
     }
 
     this.setState({
@@ -43,11 +44,6 @@ class Checkout extends Component {
       });
     }
   }
-
-  getPokemons = async (type) => {
-    const data = await getPokemonsOfType(type);
-    return data;
-  };
 
   render() {
     const { pokemons, searchedPokemon } = this.state;
