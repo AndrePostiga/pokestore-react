@@ -1,11 +1,13 @@
 export default function theme(state = '', action) {
+  console.log('tema',process.env.THEME)
+  console.log('env', process.env)
   switch (action.type) {
     case 'THEME':
       return {
         theme: action.theme || 'grass', 
         color: getColorFromTheme(action.theme)
       }
-
+      
     default:
       return state;
   }
@@ -19,6 +21,8 @@ const getColorFromTheme = (theme) => {
       return 'red'
     case 'water':
       return 'blue'
+    case 'poison':
+      return 'violet'
     default:
       return 'green'
   }

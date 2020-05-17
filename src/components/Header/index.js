@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Navigation } from './style';
 
 class Header extends Component {
-  // eslint-disable-next-line react/state-in-constructor
   state = {
     inputValue: '',
   };

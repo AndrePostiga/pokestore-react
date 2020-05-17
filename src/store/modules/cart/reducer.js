@@ -1,7 +1,8 @@
 import produce from 'immer';
 
 const retrieveState = () => {
-  const cart = JSON.parse(localStorage.getItem('cart'));
+  // const cart = JSON.parse(localStorage.getItem('cart'));
+  const cart = JSON.parse(sessionStorage.getItem('cart'));
   return cart || []
 }
 
@@ -26,6 +27,9 @@ export default function cart(state = [], action) {
           draft[productIndex].amount -= 1;
         }
       });
+
+    case 'FINISHED':
+      return []
 
     default:
       return retrieveState();

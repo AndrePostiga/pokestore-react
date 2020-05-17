@@ -8,7 +8,7 @@ import { ProductCartView, Container, CartFooter } from './style';
 class Cart extends Component {
   state = {
     cart: [],
-    total: [],
+    total: 0,
   };
 
   componentDidMount() {
@@ -23,13 +23,31 @@ class Cart extends Component {
     const { cart, total } = this.props;
     
     if (prevProps.cart !== cart) {
-      localStorage.setItem('cart', JSON.stringify(cart));
-      localStorage.setItem('total', JSON.stringify(total));
+      // localStorage.setItem('cart', JSON.stringify(cart));
+      // localStorage.setItem('total', JSON.stringify(total));
+      sessionStorage.setItem('cart', JSON.stringify(cart));
+      sessionStorage.setItem('total', JSON.stringify(total));
       this.setState({
         cart,
         total,
       });
     }
+  }
+
+  handleBuy = (event) => {
+    const { dispatch } = this.props
+    alert('parabens pela compra')
+    // localStorage.removeItem('cart')
+    sessionStorage.removeItem('cart')
+
+    dispatch({
+      type: 'FINISHED'
+    })
+    
+    this.setState({
+      cart:[],
+      total: formatPrice(0)
+    })
   }
 
   render() {
@@ -63,7 +81,7 @@ class Cart extends Component {
             <span>{total}</span>
           </div>
 
-          <button type="button">
+          <button type="button" onClick={() => this.handleBuy()}>
             <span>Finalizar compra</span>
           </button>
         </CartFooter>
