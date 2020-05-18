@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { MdSearch } from 'react-icons/md';
 import { connect } from 'react-redux';
 import { Navigation } from './style';
+import * as ProductListActions from '../../store/modules/productList/actions';
 
 class Header extends Component {
   state = {
@@ -9,33 +11,23 @@ class Header extends Component {
   };
 
   handleChange = (input) => {
-    const { dispatch } = this.props;
-
+    const { search } = this.props;
     const term = input.target.value;
-
     this.setState({
       inputValue: term,
     });
-
-    dispatch({
-      type: 'SEARCH',
-      inputValue: term.toLowerCase(),
-    });
+    search(term.toLowerCase());
   };
 
   handleSearch = () => {
     const { inputValue } = this.state;
-    const { dispatch } = this.props;
-
-    dispatch({
-      type: 'SEARCH',
-      inputValue,
-    });
+    const { search } = this.props;
+    search(inputValue.toLowerCase());
   };
 
   render() {
     const { inputValue } = this.state;
-    const { theme } = this.props
+    const { theme } = this.props;
     return (
       <Navigation theme={theme.color}>
         <button type="button">
@@ -58,8 +50,11 @@ class Header extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  theme: state.theme
+  theme: state.theme,
 });
 
-export default connect(mapStateToProps)(Header);
-export {Header};
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(ProductListActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export { Header };

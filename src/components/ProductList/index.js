@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { MdAddShoppingCart } from 'react-icons/md';
 import { Container, List } from './style';
+import * as CartActions from '../../store/modules/cart/actions';
 
-function ProductList({ pokemons, dispatch, theme }) {
-
+function ProductList({ pokemons, addToCart, theme }) {
   return (
     <Container>
       <List theme={theme.color}>
@@ -14,12 +15,7 @@ function ProductList({ pokemons, dispatch, theme }) {
             <strong>{pokemon.name}</strong>
             <span>{pokemon.priceFormatted}</span>
 
-            <button
-              type="button"
-              onClick={() =>
-                dispatch({ type: 'ADD_TO_CART', product: pokemon })
-              }
-            >
+            <button type="button" onClick={() => addToCart(pokemon)}>
               <MdAddShoppingCart size={12} color="#FFF" />
               <span>Adicionar ao carrinho</span>
             </button>
@@ -34,5 +30,8 @@ const mapStateToProps = (state) => ({
   theme: state.theme,
 });
 
-export default connect(mapStateToProps)(ProductList);
-export { ProductList }
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(CartActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductList);
+export { ProductList };

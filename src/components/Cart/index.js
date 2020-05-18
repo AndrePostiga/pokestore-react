@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { MdRemoveShoppingCart } from 'react-icons/md';
 
+import * as CartActions from '../../store/modules/cart/actions';
 import { formatPrice } from '../../util/format';
+
 import { ProductCartView, Container, CartFooter } from './style';
 
 class Cart extends Component {
@@ -12,19 +15,17 @@ class Cart extends Component {
   };
 
   componentDidMount() {
-    const {cart, total} = this.props
+    const { cart, total } = this.props;
     this.setState({
       cart,
-      total
-    })
+      total,
+    });
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const { cart, total } = this.props;
-    
+
     if (prevProps.cart !== cart) {
-      // localStorage.setItem('cart', JSON.stringify(cart));
-      // localStorage.setItem('total', JSON.stringify(total));
       sessionStorage.setItem('cart', JSON.stringify(cart));
       sessionStorage.setItem('total', JSON.stringify(total));
       this.setState({
@@ -35,23 +36,16 @@ class Cart extends Component {
   }
 
   handleBuy = (event) => {
-    const { dispatch } = this.props
-    alert('parabens pela compra')
-    // localStorage.removeItem('cart')
-    sessionStorage.removeItem('cart')
-
-    dispatch({
-      type: 'FINISHED'
-    })
-    
-    this.setState({
-      cart:[],
-      total: formatPrice(0)
-    })
-  }
+    const { buy } = this.props;
+    alert('parabens pela compra');
+    sessionStorage.removeItem('cart');
+    buy();
+    // aqui entraria a alteração de estado que abriria
+    // meu modal hidden = true
+  };
 
   render() {
-    const { dispatch, theme } = this.props;
+    const { theme, removeFromCart } = this.props;
     const { cart, total } = this.state;
 
     return (
@@ -64,11 +58,7 @@ class Cart extends Component {
               <strong>{item.name}</strong>
               <span>{item.subTotal}</span>
               <span>{item.amount}</span>
-              <button type="button"
-                onClick={() =>
-                  dispatch({ type: 'REMOVE_FROM_CART', id: item.id })
-                }
-              >
+              <button type="button" onClick={() => removeFromCart(item.id)}>
                 <MdRemoveShoppingCart size={12} color="#FFF" />
               </button>
             </li>
@@ -98,8 +88,11 @@ const mapStateToProps = (state) => ({
   total: formatPrice(
     state.cart.reduce((total, item) => (total += item.amount * item.price), 0)
   ),
-  theme: state.theme
+  theme: state.theme,
 });
 
-export default connect(mapStateToProps)(Cart);
-export { Cart }
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(CartActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export { Cart };
