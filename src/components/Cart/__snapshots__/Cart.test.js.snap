@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Cart Component Should render without errors 1`] = `ShallowWrapper {}`;
+
+exports[`ProductList Component Should render without errors 1`] = `ShallowWrapper {}`;

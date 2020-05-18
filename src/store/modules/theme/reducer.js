@@ -1,6 +1,4 @@
 export default function theme(state = '', action) {
-  console.log('tema',process.env.THEME)
-  console.log('env', process.env)
   switch (action.type) {
     case 'THEME':
       return {

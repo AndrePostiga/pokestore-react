@@ -1,11 +1,5 @@
 import produce from 'immer';
 
-const retrieveState = () => {
-  // const cart = JSON.parse(localStorage.getItem('cart'));
-  const cart = JSON.parse(sessionStorage.getItem('cart'));
-  return cart || []
-}
-
 export default function cart(state = [], action) {
   switch (action.type) {
     case 'ADD_TO_CART':
@@ -32,7 +26,8 @@ export default function cart(state = [], action) {
       return []
 
     default:
-      return retrieveState();
+      const cart = JSON.parse(sessionStorage.getItem('cart'));
+      return cart || state
   }
 }
 
