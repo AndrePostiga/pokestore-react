@@ -1,9 +1,16 @@
 import api from './api';
 import { Capitalize, formatPrice } from '../util/format';
 
+const createPokemons = ({ id, name, imageUrl, price }) => ({
+  id,
+  name: Capitalize(name),
+  imageUrl,
+  price,
+  priceFormatted: formatPrice(price),
+});
+
 export async function getPokemonsFromApi(urls) {
   const response = await api.get(urls);
-
   return response.map((pokemon) =>
     createPokemons({
       id: pokemon.data.id,
@@ -20,11 +27,3 @@ export async function getPokemonsOfType(type) {
   const pokemons = await getPokemonsFromApi(urls);
   return pokemons;
 }
-
-const createPokemons = ({ id, name, imageUrl, price }) => ({
-  id,
-  name: Capitalize(name),
-  imageUrl,
-  price,
-  priceFormatted: formatPrice(price),
-});
