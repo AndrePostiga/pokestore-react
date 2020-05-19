@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
+import swal from '@sweetalert/with-react';
 import { Container, Loading } from './styles';
 import { getPokemonsOfType } from '../../services/PokemonService';
 import Cart from '../../components/Cart';
@@ -20,7 +21,18 @@ class Checkout extends Component {
     let items = JSON.parse(sessionStorage.getItem('pokemons'));
 
     if (!items) {
-      items = await getPokemonsOfType(theme.theme);
+      try {
+        items = await getPokemonsOfType(theme.theme);
+      } catch (error) {
+        swal({
+          text:
+            'Não foi possível capturar todos os Pokemon, por favor, atualize a página e tente novamente',
+          buttons: {
+            cancel: 'Close',
+          },
+        });
+        return;
+      }
     }
 
     this.setState({

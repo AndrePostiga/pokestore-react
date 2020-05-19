@@ -22,8 +22,15 @@ export async function getPokemonsFromApi(urls) {
 }
 
 export async function getPokemonsOfType(type) {
-  const { data } = await api.getType('/type', type);
-  const urls = data.pokemon.map((result) => result.pokemon.url);
-  const pokemons = await getPokemonsFromApi(urls);
+  let pokemons;
+
+  try {
+    const { data } = await api.getType('/type', type);
+    const urls = data.pokemon.map((result) => result.pokemon.url);
+    pokemons = await getPokemonsFromApi(urls);
+  } catch (error) {
+    throw new Error(error);
+  }
+
   return pokemons;
 }

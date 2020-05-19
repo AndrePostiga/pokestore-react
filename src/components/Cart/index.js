@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MdRemoveShoppingCart } from 'react-icons/md';
 
+import swal from '@sweetalert/with-react';
+
 import * as CartActions from '../../store/modules/cart/actions';
 import { formatPrice } from '../../util/format';
 
@@ -12,40 +14,61 @@ class Cart extends Component {
   state = {
     cart: [],
     total: 0,
+    formatedTotal: '',
   };
 
   componentDidMount() {
-    const { cart, total } = this.props;
+    const { cart, total, formatedTotal } = this.props;
     this.setState({
       cart: cart || [],
       total,
+      formatedTotal,
     });
   }
 
   componentDidUpdate(prevProps) {
-    const { cart, total } = this.props;
+    const { cart, total, formatedTotal } = this.props;
     if (prevProps.cart !== cart) {
       sessionStorage.setItem('cart', JSON.stringify(cart));
       sessionStorage.setItem('total', JSON.stringify(total));
       this.setState({
         cart: cart || [],
         total,
+        formatedTotal,
       });
     }
   }
 
   handleBuy = (event) => {
     const { buy } = this.props;
-    alert('Parabéns pela compra');
+    const { total, formatedTotal } = this.props;
+
+    swal({
+      text: 'Parabéns pela compra',
+      buttons: {
+        cancel: 'Fechar',
+      },
+      content: (
+        <div>
+          <strong>Muito obrigado por comprar conosco</strong>
+          <p>
+            O valor da sua compra foi de: <strong>{formatedTotal}</strong>
+          </p>
+          <p>
+            Você ganhou <strong>{formatPrice(total * 0.01)}</strong>≈ de
+            cashback
+          </p>
+        </div>
+      ),
+    });
+
     sessionStorage.removeItem('cart');
     buy();
-    // aqui entraria a alteração de estado que abriria
-    // meu modal hidden = true
   };
 
   render() {
     const { theme, removeFromCart } = this.props;
-    const { cart, total } = this.state;
+    const { cart, formatedTotal } = this.state;
     return (
       <Container>
         <h1>Carrinho</h1>
@@ -66,7 +89,7 @@ class Cart extends Component {
         <CartFooter theme={theme.color}>
           <div>
             <strong>Total</strong>
-            <span>{total}</span>
+            <span>{formatedTotal}</span>
           </div>
 
           <button type="button" onClick={() => this.handleBuy()}>
@@ -83,8 +106,12 @@ const mapStateToProps = (state) => ({
     ...item,
     subTotal: formatPrice(item.price * item.amount),
   })),
-  total: formatPrice(
+  formatedTotal: formatPrice(
     state.cart.reduce((total, item) => (total += item.amount * item.price), 0)
+  ),
+  total: state.cart.reduce(
+    (total, item) => (total += item.amount * item.price),
+    0
   ),
   theme: state.theme,
 });
