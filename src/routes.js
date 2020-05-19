@@ -1,19 +1,21 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { Switch, Route } from 'react-router-dom';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux';
 import Checkout from './pages/Checkout';
+import * as ThemeActions from './store/modules/theme/actions';
 
-function Routes({dispatch, theme}) {
-  dispatch({
-    type: 'THEME',
-    theme: theme
-  })
+function Routes({ defineTheme, theme }) {
+  defineTheme(theme);
 
   return (
     <Switch>
-      <Route path="/" exact component={Checkout}/>
+      <Route path="/" exact component={Checkout} />
     </Switch>
   );
 }
 
-export default connect()(Routes)
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(ThemeActions, dispatch);
+
+export default connect(null, mapDispatchToProps)(Routes);

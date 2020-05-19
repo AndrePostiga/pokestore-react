@@ -1,4 +1,4 @@
-export default function cart(state = '', action) {
+export default function cart(state = '', action = '') {
   switch (action.type) {
     case 'SEARCH':
       return action.inputValue || '';

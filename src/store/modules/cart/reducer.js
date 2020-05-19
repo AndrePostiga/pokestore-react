@@ -1,6 +1,6 @@
 import produce from 'immer';
 
-export default function cart(state = [], action) {
+export default function cart(state = [], action = '') {
   switch (action.type) {
     case 'ADD_TO_CART':
       return produce(state, (draft) => {
@@ -23,12 +23,10 @@ export default function cart(state = [], action) {
       });
 
     case 'FINISHED':
-      return []
+      return [];
 
     default:
       const cart = JSON.parse(sessionStorage.getItem('cart'));
-      return cart || state
+      return cart || state;
   }
 }
-
-

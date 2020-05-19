@@ -1,27 +1,29 @@
-export default function theme(state = '', action) {
+const INITIAL_STATE = {
+  theme: 'grass',
+  color: 'green',
+};
+
+export default function theme(state = INITIAL_STATE, action = '') {
   switch (action.type) {
     case 'THEME':
-      return {
-        theme: action.theme || 'grass', 
-        color: getColorFromTheme(action.theme)
-      }
-      
+      return getThemeFromString(action.theme);
+
     default:
       return state;
   }
 }
 
-const getColorFromTheme = (theme) => {
-  switch (theme){
+const getThemeFromString = (theme) => {
+  switch (theme) {
     case 'grass':
-      return 'green'
+      return { theme: 'grass', color: 'green' };
     case 'fire':
-      return 'red'
+      return { theme: 'fire', color: 'red' };
     case 'water':
-      return 'blue'
+      return { theme: 'water', color: 'blue' };
     case 'poison':
-      return 'violet'
+      return { theme: 'poison', color: 'violet' };
     default:
-      return 'green'
+      return { theme: 'grass', color: 'green' };
   }
-}
+};
