@@ -21,8 +21,8 @@ const getThemeFromString = (theme) => {
       return { theme: 'fire', color: 'red' };
     case 'water':
       return { theme: 'water', color: 'blue' };
-    case 'poison':
-      return { theme: 'poison', color: 'violet' };
+    case 'psychic':
+      return { theme: 'psychic', color: '#ffd500' };
     default:
       return { theme: 'grass', color: 'green' };
   }

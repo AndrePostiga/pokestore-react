@@ -17,19 +17,18 @@ class Cart extends Component {
   componentDidMount() {
     const { cart, total } = this.props;
     this.setState({
-      cart,
+      cart: cart || [],
       total,
     });
   }
 
   componentDidUpdate(prevProps) {
     const { cart, total } = this.props;
-
     if (prevProps.cart !== cart) {
       sessionStorage.setItem('cart', JSON.stringify(cart));
       sessionStorage.setItem('total', JSON.stringify(total));
       this.setState({
-        cart,
+        cart: cart || [],
         total,
       });
     }
@@ -37,7 +36,7 @@ class Cart extends Component {
 
   handleBuy = (event) => {
     const { buy } = this.props;
-    alert('parabens pela compra');
+    alert('Parabéns pela compra');
     sessionStorage.removeItem('cart');
     buy();
     // aqui entraria a alteração de estado que abriria
@@ -47,7 +46,6 @@ class Cart extends Component {
   render() {
     const { theme, removeFromCart } = this.props;
     const { cart, total } = this.state;
-
     return (
       <Container>
         <h1>Carrinho</h1>

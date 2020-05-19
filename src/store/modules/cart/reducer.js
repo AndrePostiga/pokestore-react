@@ -6,9 +6,11 @@ export default function cart(state = [], action = '') {
       return produce(state, (draft) => {
         const productIndex = state.findIndex((e) => e.id === action.product.id);
 
-        productIndex >= 0
-          ? (draft[productIndex].amount += 1)
-          : draft.push({ ...action.product, amount: 1 });
+        if (productIndex >= 0) {
+          draft[productIndex].amount += 1;
+        } else {
+          draft.push({ ...action.product, amount: 1 });
+        }
       });
 
     case 'REMOVE_FROM_CART':
