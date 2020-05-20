@@ -10,7 +10,7 @@ function Routes({ defineTheme, theme }) {
 
   return (
     <Switch>
-      <Route path="/" exact component={Checkout} />
+      <Route path="/" component={Checkout} />
     </Switch>
   );
 }
