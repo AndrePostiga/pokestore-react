@@ -5,7 +5,7 @@ export const Container = styled.div`
   width: 30%;
   @media (max-width: 900px) {
     width: 100%;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
     margin-left: 0;
   }
 
@@ -25,6 +25,10 @@ export const ProductCartView = styled.ul`
   height: 350px;
   overflow: auto;
 
+  @media (max-width: 900px) {
+    height: 200px;
+  }
+
   li {
     background: #fff;
     display: flex;
@@ -35,10 +39,17 @@ export const ProductCartView = styled.ul`
     & + li {
       padding-top: 15px;
       border-top: 1px solid rgba(0, 0, 0, 0.1);
+      @media (max-width: 900px) {
+        padding-top: 5px;
+      }
     }
 
     img {
       max-width: 60px;
+
+      @media (max-width: 900px) {
+        max-width: 30px;
+      }
     }
 
     button {
@@ -47,6 +58,10 @@ export const ProductCartView = styled.ul`
       border-radius: 4px;
       overflow: hidden;
       padding: 20px;
+
+      @media (max-width: 900px) {
+        padding: 5px;
+      }
 
       transition: background 0.2s;
 
@@ -80,7 +95,7 @@ export const CartFooter = styled.div`
   }
 
   button {
-    background: ${props => props.theme};
+    background: ${(props) => props.theme};
     color: #fff;
     border: 0;
     border-radius: 4px;
@@ -90,7 +105,7 @@ export const CartFooter = styled.div`
     transition: background 0.2s;
 
     &:hover {
-      background: ${props => darken(0.03,props.theme)};
+      background: ${(props) => darken(0.03, props.theme)};
     }
 
     span {

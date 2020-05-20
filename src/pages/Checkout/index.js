@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import swal from '@sweetalert/with-react';
-import { Container, Loading } from './styles';
+import { Container, Loading, Pagination } from './styles';
 import { getPokemonsOfType } from '../../services/PokemonService';
 import Cart from '../../components/Cart';
 import ProductList from '../../components/ProductList';
@@ -104,6 +104,7 @@ class Checkout extends Component {
 
   render() {
     const { pokemonsView, searchedPokemon, loading } = this.state;
+    const { theme } = this.props;
 
     if (loading) {
       return (
@@ -121,12 +122,14 @@ class Checkout extends Component {
           <ProductList pokemons={searchedPokemon || pokemonsView} />
           <Cart />
         </Container>
-        <button type="button" onClick={() => this.handlePreviousPage()}>
-          Previous Page
-        </button>
-        <button type="button" onClick={() => this.handleNextPage()}>
-          Next Page
-        </button>
+        <Pagination theme={theme.color}>
+          <button type="button" onClick={() => this.handlePreviousPage()}>
+            <span>Retroceder</span>
+          </button>
+          <button type="button" onClick={() => this.handleNextPage()}>
+            <span>Avancar</span>
+          </button>
+        </Pagination>
       </>
     );
   }

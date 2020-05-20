@@ -5,7 +5,7 @@ export const Container = styled.div`
 `;
 
 export const Navigation = styled.nav`
-  background: ${props => props.theme};
+  background: ${(props) => props.theme};
   display: flex;
   justify-content: baseline;
   width: 100% !important;
@@ -22,7 +22,7 @@ export const Navigation = styled.nav`
   }
 
   button {
-    background: ${props => props.theme};
+    background: ${(props) => props.theme};
     border: 0;
     border-radius: 4px;
     overflow: hidden;
