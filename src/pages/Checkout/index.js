@@ -10,12 +10,15 @@ import ProductList from '../../components/ProductList';
 class Checkout extends Component {
   state = {
     pokemons: [],
+    pokemonsView: [],
+    currentPage: 1,
+    pokemonsPerPage: 6,
     searchedPokemon: null,
     loading: true,
   };
 
   async componentDidMount() {
-    const { pokemons } = this.state;
+    const { pokemons, currentPage, pokemonsPerPage } = this.state;
     const { theme } = this.props;
 
     let items = JSON.parse(sessionStorage.getItem('pokemons'));
@@ -35,9 +38,14 @@ class Checkout extends Component {
       }
     }
 
+    const indexOfLastPokemon = currentPage * pokemonsPerPage;
+    const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
+    const pokemonsView = items.slice(indexOfFirstPokemon, indexOfLastPokemon);
+
     this.setState({
       pokemons: [...pokemons, ...items],
       loading: false,
+      pokemonsView: [...pokemonsView],
     });
   }
 
@@ -50,12 +58,16 @@ class Checkout extends Component {
     }
 
     if (prevProps.searchText !== searchText) {
-      const searched = pokemons.filter((pokemon) =>
-        pokemon.name.toLowerCase().startsWith(searchText)
-      );
+      let searched = null;
+
+      if (searchText !== '') {
+        searched = pokemons.filter((pokemon) =>
+          pokemon.name.toLowerCase().startsWith(searchText)
+        );
+      }
 
       this.setState({
-        searchedPokemon: searched[0] ? [...searched] : null,
+        searchedPokemon: searched ? [...searched] : null,
       });
     }
   }
@@ -64,8 +76,35 @@ class Checkout extends Component {
     sessionStorage.clear();
   }
 
+  setNewPagination(newPage) {
+    const { pokemons, pokemonsPerPage } = this.state;
+
+    const indexOfFirstPokemon = (newPage - 1) * pokemonsPerPage;
+    const indexOfLastPokemon = indexOfFirstPokemon + pokemonsPerPage;
+    const newSet = pokemons.slice(indexOfFirstPokemon, indexOfLastPokemon);
+
+    this.setState({
+      pokemonsView: [...newSet],
+      currentPage: newPage,
+    });
+  }
+
+  handleNextPage = () => {
+    const { currentPage, pokemons, pokemonsPerPage } = this.state;
+    const lastPage = Math.ceil(pokemons.length / pokemonsPerPage);
+    const newPage = currentPage === lastPage ? lastPage : currentPage + 1;
+    this.setNewPagination(newPage);
+  };
+
+  handlePreviousPage = () => {
+    const { currentPage } = this.state;
+    const newPage = currentPage === 1 ? 1 : currentPage - 1;
+    this.setNewPagination(newPage);
+  };
+
   render() {
-    const { pokemons, searchedPokemon, loading } = this.state;
+    const { pokemonsView, searchedPokemon, loading } = this.state;
+
     if (loading) {
       return (
         <Loading>
@@ -77,10 +116,18 @@ class Checkout extends Component {
     }
 
     return (
-      <Container>
-        <ProductList pokemons={searchedPokemon || pokemons} />
-        <Cart />
-      </Container>
+      <>
+        <Container>
+          <ProductList pokemons={searchedPokemon || pokemonsView} />
+          <Cart />
+        </Container>
+        <button type="button" onClick={() => this.handlePreviousPage()}>
+          Previous Page
+        </button>
+        <button type="button" onClick={() => this.handleNextPage()}>
+          Next Page
+        </button>
+      </>
     );
   }
 }
