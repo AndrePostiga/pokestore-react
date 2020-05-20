@@ -1,15 +1,21 @@
 {
   "name": "project",
-  "homepage": "./",
+  "homepage": "https://pokestore-water.herokuapp.com/",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "13.10.1"
+  },
   "dependencies": {
     "@sweetalert/with-react": "^0.1.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
+    "express": "^4.17.1",
+    "express-favicon": "^2.0.1",
     "immer": "^6.0.5",
+    "path": "^0.12.7",
     "polished": "^3.6.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -24,7 +30,8 @@
     "sweetalert": "^2.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node ./src/server.js",
+    "start-react": "react-scripts start",
     "build": "react-scripts build",
     "test": "NODE_ICU_DATA=node_modules/full-icu react-scripts test",
     "eject": "react-scripts eject",
