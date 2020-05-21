@@ -1,13 +1,13 @@
 #`Pokestore com Reactjs`
 ------------------------------
 
-##### `Objetivo`
+#####`Objetivo`
 Desenvolver uma loja utilizando javascript com o framework Reactjs
 
-##### `USO`
+#####`USO`
 A Aplicação utiliza create-react-app para aumentar a produtividade, sem a necessidade de configurar um webpack do zero. Para rodar o projeto basta executar os seguintes comandos dentro do diretório
 
-###### `Variáveis de ambiente`
+######`Variáveis de ambiente`
 O projeto contempla diferentes estilos para cada elemento de Pokemon, decidi por implementar apenas 4 estilos de pokemon.
 Para rodar as lojas basta passar uma das seguintes variáveis de ambiente:
 
@@ -18,41 +18,41 @@ Para rodar as lojas basta passar uma das seguintes variáveis de ambiente:
 
 Caso nenhuma variável seja passada, a loja padrão será grass
 
-##### `Ambiente de desenvolvimento`
+#####`Ambiente de desenvolvimento`
 Para rodar o ambiente de desenvolvimento basta rodar o comando (lembrando de passar a variável de ambiente)
 
-####### `No Windows CMD.exe`
+#######`No Windows CMD.exe`
 ```yarn 
 set "REACT_APP_THEME=fire" && yarn start-react
 `````
-####### `No Windows Powershell`
+#######`No Windows Powershell`
 ```yarn 
 ($env:REACT_APP_THEME = "fire") -and (yarn start)
 `````
-####### `No Linux/MacOs`
+#######`No Linux/MacOs`
 ```yarn 
 REACT_APP_THEME=fire yarn start-react
 `````
 
-##### `Ambiente de produção`
+#####`Ambiente de produção`
 Para rodar o ambiente de produção desenvolvi uma pequeno server em Nodejs + Express. (Não, não é Deno) 
 Neste ambiente a aplicação precisa ser buildada antes de ser rodada
 
 Basta rodar os seguintes comandos:
 
-####### `No Windows CMD.exe`
+#######`No Windows CMD.exe`
 ```yarn 
 set "REACT_APP_THEME=fire" && yarn build
 yarn start
 `````
 
-####### `No Linux/MacOs`
+#######`No Linux/MacOs`
 ```yarn 
 REACT_APP_THEME=fire yarn build
 yarn start
 `````
 
-##### `Testes`
+#####`Testes`
 Para rodar os testes da aplicação basta dar o comando
 ####### `Em qualquer ambiente`
 ```yarn 
