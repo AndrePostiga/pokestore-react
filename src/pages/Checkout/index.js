@@ -127,7 +127,7 @@ class Checkout extends Component {
             <span>Retroceder</span>
           </button>
           <button type="button" onClick={() => this.handleNextPage()}>
-            <span>Avancar</span>
+            <span>Avançar</span>
           </button>
         </Pagination>
       </>
