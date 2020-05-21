@@ -7,6 +7,14 @@ Desenvolver uma loja utilizando javascript com o framework Reactjs
 ##### `USO`
 A Aplicação utiliza create-react-app para aumentar a produtividade, sem a necessidade de configurar um webpack do zero. Para rodar o projeto basta executar os seguintes comandos dentro do diretório
 
+##### `Produção - As aplicações estão onlines nos reguintes endereços:`
+* https://pokestore-grass.herokuapp.com/
+* https://pokestore-fire.herokuapp.com/
+* https://pokestore-water.herokuapp.com/
+* https://pokestore-psychic.herokuapp.com/
+
+Os deploys foram feitos utilizando a plataforma Heroku com o buildpack "mars/create-react-app"
+
 ##### `Instalar as dependências - em qualquer ambiente`
 ```yarn 
 yarn test
