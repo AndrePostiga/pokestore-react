@@ -60,12 +60,12 @@ yarn test
 
 A aplicação utiliza uma série de bibliotecas para facilitar e dar agilidade ao desenvolvimento.
 
-> A biblioteca escolhida para fazer os estilos foi a Styled-Components;
-> Também foi utilizada as libs do Redux para react, afim de facilitar o gerenciamento de estados dos componentes;
-> Para não fazer múltiplas requisições a api, e não perder o estado do carrinho, foi utilizado armazenamento local em SessionStorage de modo que quando o cliente atualizasse a página ele não perdesse o estado anterior, mas caso ele a feche os estados são resetados;
-> Para ajudar a desenvolver e ver as actions funcionando, utilizei o Reactotron. Assim eu podia salvar um estado da aplicação e carregar esse estado caso necessário;
-> Para ajudar a trabalhar com estados imutáveis, utilizei o immer. Ele faz uma cópia do estado atual para um draft que pode ser alterado como uma lista comum do Js, ao final da função produce ele pega o estado novo e faz internamente os parses para com o estado anterior;
-> Para fazer as chamadas a api utilizei o Axios <3
-> Algumas outras libs foram utilizadas para ajudar no ambiente de desenvolvimento, como por exemplo o ESLint com configuração do Airbnb, junto ao Prettier, e o Babel;
-> E para fazer os testes, utilizei o famoso Jest com o Enzyme, algumas asserções foram feitas utilizando o jest-styled-components.
+* A biblioteca escolhida para fazer os estilos foi a Styled-Components;
+* Também foi utilizada as libs do Redux para react, afim de facilitar o gerenciamento de estados dos componentes;
+* Para não fazer múltiplas requisições a api, e não perder o estado do carrinho, foi utilizado armazenamento local em SessionStorage de modo que quando o cliente atualizasse a página ele não perdesse o estado anterior, mas caso ele a feche os estados são resetados;
+* Para ajudar a desenvolver e ver as actions funcionando, utilizei o Reactotron. Assim eu podia salvar um estado da aplicação e carregar esse estado caso necessário;
+* Para ajudar a trabalhar com estados imutáveis, utilizei o immer. Ele faz uma cópia do estado atual para um draft que pode ser alterado como uma lista comum do Js, ao final da função produce ele pega o estado novo e faz internamente os parses para com o estado anterior;
+* Para fazer as chamadas a api utilizei o Axios <3
+* Algumas outras libs foram utilizadas para ajudar no ambiente de desenvolvimento, como por exemplo o ESLint com configuração do Airbnb, junto ao Prettier, e o Babel;
+* E para fazer os testes, utilizei o famoso Jest com o Enzyme, algumas asserções foram feitas utilizando o jest-styled-components.
 
