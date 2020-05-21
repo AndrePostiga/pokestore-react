@@ -17,6 +17,11 @@ describe('Theme reducer', () => {
     expect(state).toStrictEqual(data);
   });
 
+  it('Should be grass theme if any string is passed', () => {
+    const state = Theme('', ThemeActions.defineTheme('auhediuahediuae'));
+    expect(state).toStrictEqual(data);
+  });
+
   it('Should be red color if fire theme is passed', () => {
     data.theme = 'fire';
     data.color = 'red';
@@ -24,8 +29,5 @@ describe('Theme reducer', () => {
     expect(state).toStrictEqual(data);
   });
 
-  it('Should be grass theme if any string is passed', () => {
-    const state = Theme('', ThemeActions.defineTheme('auhediuahediuae'));
-    expect(state).toStrictEqual(data);
-  });
+
 });
