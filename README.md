@@ -11,10 +11,10 @@ A Aplicação utiliza create-react-app para aumentar a produtividade, sem a nece
 O projeto contempla diferentes estilos para cada elemento de Pokemon, decidi por implementar apenas 4 estilos de pokemon.
 Para rodar as lojas basta passar uma das seguintes variáveis de ambiente:
 
-REACT_APP_THEME=fire
-REACT_APP_THEME=grass
-REACT_APP_THEME=water
-REACT_APP_THEME=psychic
+* REACT_APP_THEME=fire
+* REACT_APP_THEME=grass
+* REACT_APP_THEME=water
+* REACT_APP_THEME=psychic
 
 Caso nenhuma variável seja passada, a loja padrão será grass
 
@@ -39,6 +39,7 @@ Para rodar o ambiente de produção desenvolvi uma pequeno server em Nodejs + Ex
 Neste ambiente a aplicação precisa ser buildada antes de ser rodada
 
 Basta rodar os seguintes comandos:
+
 ####### `No Windows CMD.exe`
 ```yarn 
 set "REACT_APP_THEME=fire" && yarn build
