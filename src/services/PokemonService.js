@@ -1,6 +1,7 @@
 import api from './api';
 import { Capitalize, formatPrice } from '../util/format';
 
+
 const createPokemons = ({ id, name, imageUrl, price }) => ({
   id,
   name: Capitalize(name),
@@ -15,7 +16,7 @@ export async function getPokemonsFromApi(urls) {
     createPokemons({
       id: pokemon.data.id,
       name: pokemon.data.name,
-      imageUrl: pokemon.data.sprites.front_default,
+      imageUrl: pokemon.data.sprites.front_default || `${process.env.PUBLIC_URL}/assets/images/guest.jpg`,
       price: Math.random() * 100,
     })
   );
